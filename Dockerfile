@@ -16,12 +16,14 @@ RUN apt-get update \
         net-tools \
     && rm -rf /var/lib/apt/lists/*;
 
+USER        container
+ENV         USER=container HOME=/home/container
+WORKDIR     /home/container
+
 COPY ./veloren-server-cli /home/container/veloren-server-cli
 COPY ./assets/common /home/container/assets/common
 COPY ./assets/server /home/container/assets/server
 COPY ./assets/world /home/container/assets/world
-
-WORKDIR /home/container
 
 ENV RUST_BACKTRACE=full
 ENTRYPOINT ["/home/container/veloren-server-cli"]
